@@ -1,0 +1,29 @@
+units		metal
+
+dimension	3
+boundary	p p p
+
+atom_style	atomic
+
+
+lattice	fcc 3.50
+region		setup block -50 50 -50 50 -50 50 units box
+region		bar block -30 30 -30 30 -30 30
+
+read_data	hot.data group square
+
+
+region		ball sphere 0 0 0 8 side in
+
+group 		ball region ball
+
+group		newball intersect square ball
+
+region 	deleted sphere 0 0 0 8 side out
+group		deleted region deleted
+
+
+delete_atoms	group deleted 
+
+write_data	freshball.dat
+
